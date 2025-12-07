@@ -3,80 +3,891 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Permintaan Maaf untuk Nia</title>
+    <title>Service Gadget - Links</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="icon" type="image/png" href="gambar/elservice.png">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
         body {
-            font-family: 'Arial', sans-serif;
-            background-color: #f0f0f0;
-            color: #333;
-            text-align: center;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            background: #0a0a0a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
             padding: 20px;
-            transition: background-color 0.5s;
+            overflow-x: hidden;
+            position: relative;
         }
-        h1 {
-            color: #ff69b4; /* Warna pink */
-            animation: fadeIn 2s;
+
+        .bg-gradient {
+            position: fixed;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            z-index: 0;
+            animation: gradientShift 15s ease infinite;
+            background: radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.3), transparent 50%),
+                        radial-gradient(circle at 80% 80%, rgba(255, 0, 128, 0.3), transparent 50%),
+                        radial-gradient(circle at 40% 20%, rgba(0, 255, 255, 0.2), transparent 50%);
         }
-        p {
-            font-size: 1.2em;
-            margin: 20px 0;
+
+        @keyframes gradientShift {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -50px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
         }
-        .heart {
-            font-size: 50px;
-            color: #ff1493; /* Warna pink lebih gelap */
-            animation: heartbeat 1s infinite;
+
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
         }
-        @keyframes heartbeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
+
+        .particle {
+            position: absolute;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            animation: float-particle linear infinite;
         }
+
+        @keyframes float-particle {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(720deg);
+                opacity: 0;
+            }
+        }
+
         .container {
-            max-width: 600px;
-            margin: auto;
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 680px;
+            width: 100%;
+            position: relative;
+            z-index: 2;
         }
-        button {
-            background-color: #ff69b4;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+
+        .profile-section {
+            text-align: center;
+            margin-bottom: 50px;
+            animation: slideDown 1s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-100px) scale(0.8);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .logo-container {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 30px;
+            position: relative;
             cursor: pointer;
-            font-size: 1.1em;
-            transition: background-color 0.3s;
-            margin: 5px; /* Menambahkan margin antar tombol */
+            transition: transform 0.3s ease;
         }
-        button:hover {
-            background-color: #ff1493; /* Warna pink lebih gelap */
+
+        .logo-container:hover {
+            transform: scale(1.05);
+        }
+
+        .logo-glow {
+            position: absolute;
+            inset: -20px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, #00f5ff, #ff00ff, #00ff00, #ffff00, #00f5ff);
+            animation: rotate 4s linear infinite;
+            opacity: 0.6;
+            filter: blur(20px);
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .logo-ring {
+            position: absolute;
+            inset: -10px;
+            border-radius: 50%;
+            background: conic-gradient(from 0deg, transparent 0deg 90deg, #00f5ff 90deg 180deg, transparent 180deg 270deg, #ff00ff 270deg 360deg);
+            animation: rotate 3s linear infinite reverse;
+        }
+
+        .logo-inner {
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+            border-radius: 50%;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+        }
+
+        .logo-placeholder {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 64px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo-placeholder img {
+            width: 80%;
+            height: 80%;
+            object-fit: contain;
+        }
+
+        .verified-badge {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 48px;
+            height: 48px;
+            background: linear-gradient(135deg, #1DA1F2, #0d8bd9);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 4px solid #0a0a0a;
+            animation: popIn 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) 0.5s both, pulse-badge 2s ease-in-out 1.1s infinite;
+            box-shadow: 0 0 30px rgba(29, 161, 242, 0.6);
+        }
+
+        @keyframes popIn {
+            0% {
+                transform: scale(0) rotate(-180deg);
+                opacity: 0;
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+        }
+
+        @keyframes pulse-badge {
+            0%, 100% {
+                transform: scale(1);
+                box-shadow: 0 0 30px rgba(29, 161, 242, 0.6);
+            }
+            50% {
+                transform: scale(1.1);
+                box-shadow: 0 0 50px rgba(29, 161, 242, 1);
+            }
+        }
+
+        .verified-badge i {
+            color: white;
+            font-size: 24px;
+            animation: checkPop 0.4s ease 1.1s both;
+        }
+
+        @keyframes checkPop {
+            0% { transform: scale(0); }
+            50% { transform: scale(1.3); }
+            100% { transform: scale(1); }
+        }
+
+        h1 {
+            font-size: 42px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 12px;
+            letter-spacing: -1px;
+        }
+
+        .subtitle {
+            font-size: 18px;
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+
+        .description {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.5);
+            font-weight: 400;
+        }
+
+        .links-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .link-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            text-decoration: none;
+            color: white;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            cursor: pointer;
+            animation: cardSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) both;
+        }
+
+        .link-card:nth-child(1) { animation-delay: 0.2s; }
+        .link-card:nth-child(2) { animation-delay: 0.4s; }
+
+        @keyframes cardSlideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-100px) rotate(-5deg);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0) rotate(0deg);
+            }
+        }
+
+        .link-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.6s ease;
+        }
+
+        .link-card:hover::before {
+            left: 100%;
+        }
+
+        .link-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 24px;
+            padding: 2px;
+            background: linear-gradient(135deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .link-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            background: rgba(255, 255, 255, 0.1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5), 0 0 60px var(--glow-color, rgba(255, 255, 255, 0.3));
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .link-card:hover::after {
+            opacity: 1;
+        }
+
+        .link-card:active {
+            transform: translateY(-4px) scale(0.98);
+        }
+
+        .instagram-card {
+            --glow-color: rgba(225, 48, 108, 0.6);
+        }
+
+        .website-card {
+            --glow-color: rgba(102, 126, 234, 0.6);
+        }
+
+        .link-icon-wrapper {
+            padding: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .link-icon {
+            width: 64px;
+            height: 64px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            position: relative;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .link-card:hover .link-icon {
+            transform: rotate(10deg) scale(1.15);
+        }
+
+        .instagram-gradient {
+            background: linear-gradient(135deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            box-shadow: 0 10px 30px rgba(225, 48, 108, 0.4);
+        }
+
+        .website-gradient {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .whatsapp-gradient {
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        .whatsapp-card {
+            --glow-color: rgba(37, 211, 102, 0.6);
+        }
+
+        .icon-image {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .link-content {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        .link-title {
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 6px;
+            letter-spacing: -0.5px;
+        }
+
+        .link-subtitle {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 400;
+        }
+
+        .link-arrow {
+            padding: 24px;
+            font-size: 24px;
+            color: rgba(255, 255, 255, 0.5);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .link-card:hover .link-arrow {
+            transform: translateX(10px) scale(1.2);
+            color: rgba(255, 255, 255, 1);
+        }
+
+        .ripple {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: scale(0);
+            animation: ripple-effect 0.6s ease-out;
+            pointer-events: none;
+        }
+
+        @keyframes ripple-effect {
+            to {
+                transform: scale(4);
+                opacity: 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 { font-size: 32px; }
+            .logo-container { width: 130px; height: 130px; }
+            .link-icon { width: 52px; height: 52px; font-size: 26px; }
+            .link-title { font-size: 18px; }
+            .link-icon-wrapper, .link-arrow { padding: 18px; }
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: linear-gradient(135deg, #1e1e1e 0%, #2d2d2d 100%);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px 30px;
+            max-width: 500px;
+            width: 90%;
+            position: relative;
+            animation: slideUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .modal-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .modal-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            color: white;
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        .modal-title {
+            flex: 1;
+        }
+
+        .modal-title h2 {
+            font-size: 24px;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .modal-title p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        .close-modal {
+            width: 36px;
+            height: 36px;
+            border: none;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .close-modal:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: rotate(90deg);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 14px 16px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 15px;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            background: rgba(255, 255, 255, 0.08);
+            border-color: #25D366;
+            box-shadow: 0 0 0 3px rgba(37, 211, 102, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .form-group input::placeholder,
+        .form-group textarea::placeholder {
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 16px;
+            background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-size: 16px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+        }
+
+        .submit-btn:active {
+            transform: translateY(0);
+        }
+
+        .submit-btn i {
+            font-size: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .modal-content {
+                padding: 30px 20px;
+            }
         }
     </style>
 </head>
 <body>
+    <div class="bg-gradient"></div>
+    <div class="particles" id="particles"></div>
+
     <div class="container">
-        <h1>Maafkan Aku, Nia!</h1>
-        <p>Setiap detik tanpamu terasa hampa. Aku sangat menyesal atas kesalahanku.</p>
-        <p class="heart">❤️</p>
-        <p>Semoga kita bisa memperbaiki semuanya dan kembali bersama.</p>
-        <button id="forgiveButton" onclick="handleResponse()">Maafin</button>
-        <button id="notForgiveButton" onclick="moveButton()">Enggak Maafin</button>
+        <div class="profile-section">
+            <div class="logo-container" id="logo">
+                <div class="logo-glow"></div>
+                <div class="logo-ring"></div>
+                <div class="logo-inner">
+                    <div class="logo-placeholder">
+                        <!-- <i class="fas fa-mobile-alt"></i> -->
+                        <img src="gambar/elservice.png" alt="Logo">
+                    </div>
+                </div>
+                <div class="verified-badge">
+                    <i class="fas fa-check"></i>
+                </div>
+            </div>
+            <h1>Service Gadget Pro</h1>
+            <p class="subtitle">✨ Ahli Service Gadget Terpercaya ✨</p>
+            <p class="description">Spesialis perbaikan smartphone & tablet - Garansi resmi</p>
+        </div>
+
+        <div class="links-container">
+            <a href="https://www.instagram.com/elservicee.id?igsh=YjgxbjRiYzMweXNw&utm_source=qr" class="link-card instagram-card" target="_blank">
+                <div class="link-icon-wrapper">
+                    <div class="link-icon instagram-gradient">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">Instagram</div>
+                    <div class="link-subtitle">Follow untuk update & promo menarik</div>
+                </div>
+                <div class="link-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <a href="https://raysatyaa.github.io/ElService/" class="link-card website-card" target="_blank">
+                <div class="link-icon-wrapper">
+                    <div class="link-icon website-gradient">
+                        <i class="fas fa-globe"></i>
+                        <!-- Atau ganti dengan icon PNG: <img src="website-icon.png" alt="Website" class="icon-image"> -->
+                    </div>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">Website Resmi</div>
+                    <div class="link-subtitle">Cek layanan lengkap & harga terbaru</div>
+                </div>
+                <div class="link-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <a href="https://wa.me/6288802142498" class="link-card whatsapp-card" id="whatsappBtn">
+                <div class="link-icon-wrapper">
+                    <div class="link-icon whatsapp-gradient">
+                        <i class="fab fa-whatsapp"></i>
+                        <!-- Atau ganti dengan icon PNG: <img src="whatsapp-icon.png" alt="WhatsApp" class="icon-image"> -->
+                    </div>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">WhatsApp</div>
+                    <div class="link-subtitle">Konsultasi gratis via WhatsApp</div>
+                </div>
+                <div class="link-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <a href="https://raysatyaa.github.io/daftar-harga/" class="link-card website-card" target="_blank">
+                <div class="link-icon-wrapper">
+                    <div class="link-icon whatsapp-gradient">
+                        <i class="fas fa-dollar-sign"></i>
+                        <!-- Atau ganti dengan icon PNG: <img src="website-icon.png" alt="Website" class="icon-image"> -->
+                    </div>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">Daftar Harga</div>
+                    <div class="link-subtitle">Cek layanan lengkap & harga terbaru</div>
+                </div>
+                <div class="link-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+
+            <a href="https://maps.app.goo.gl/XKxUGKmyL2o1Hgac6" class="link-card location-card" target="_blank">
+                <div class="link-icon-wrapper">
+                    <div class="link-icon white-gradient">
+                        <!-- <i class="fas fa-map-marker-alt"></i> -->
+                        <img src="gambar/mapicon.png" alt="Lokasi" class="icon-image">
+                    </div>
+                </div>
+                <div class="link-content">
+                    <div class="link-title">Lokasi Toko</div>
+                    <div class="link-subtitle">Sebelah kanan Alluna Laundry Express, kemudian masuk ke belakang
+                    </div>
+                </div>
+                <div class="link-arrow">
+                    <i class="fas fa-arrow-right"></i>
+                </div>
+            </a>
+
+            
+
+        </div>
+    </div>
+
+    <!-- Modal WhatsApp -->
+    <div id="whatsappModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-icon">
+                    <i class="fab fa-whatsapp"></i>
+                </div>
+                <div class="modal-title">
+                    <h2>Konsultasi WhatsApp</h2>
+                    <p>Isi form untuk mulai chat</p>
+                </div>
+                <button class="close-modal" id="closeModal">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+
+            <form id="whatsappForm">
+                <div class="form-group">
+                    <label for="nama">Nama Lengkap</label>
+                    <input type="text" id="nama" placeholder="Masukkan nama lengkap" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="alamat">Alamat</label>
+                    <input type="text" id="alamat" placeholder="Masukkan alamat lengkap" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="tipe">Tipe HP / Gadget</label>
+                    <input type="text" id="tipe" placeholder="Contoh: iPhone 13 Pro, Samsung Galaxy S21" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="kendala">Kendala / Kerusakan</label>
+                    <textarea id="kendala" placeholder="Jelaskan kendala atau kerusakan yang dialami" required></textarea>
+                </div>
+
+                <button type="submit" class="submit-btn">
+                    <i class="fab fa-whatsapp"></i>
+                    Kirim ke WhatsApp
+                </button>
+            </form>
+        </div>
     </div>
 
     <script>
-        function handleResponse() {
-            window.location.href = "maafin.html";
+        // Create floating particles
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            for (let i = 0; i < 30; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'particle';
+                particle.style.width = Math.random() * 4 + 1 + 'px';
+                particle.style.height = particle.style.width;
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.animationDuration = Math.random() * 10 + 10 + 's';
+                particle.style.animationDelay = Math.random() * 5 + 's';
+                particlesContainer.appendChild(particle);
+            }
         }
+        createParticles();
 
-        function moveButton() {
-            const button = document.getElementById('notForgiveButton');
-            const randomX = Math.floor(Math.random() * (window.innerWidth - button.offsetWidth));
-            const randomY = Math.floor(Math.random() * (window.innerHeight - button.offsetHeight));
-            button.style.position = 'absolute'; // Mengubah posisi tombol menjadi absolute
-            button.style.left = randomX + 'px'; // Memindahkan tombol ke posisi X acak
-            button.style.top = randomY + 'px'; // Memindahkan tombol ke posisi Y acak
-        }
+        // Ripple effect on click
+        document.querySelectorAll('.link-card').forEach(card => {
+            card.addEventListener('click', function(e) {
+                // Skip ripple for WhatsApp button
+                if (this.id === 'whatsappBtn') return;
+                
+                const ripple = document.createElement('div');
+                ripple.className = 'ripple';
+                const rect = this.getBoundingClientRect();
+                const size = Math.max(rect.width, rect.height);
+                const x = e.clientX - rect.left - size / 2;
+                const y = e.clientY - rect.top - size / 2;
+                
+                ripple.style.width = ripple.style.height = size + 'px';
+                ripple.style.left = x + 'px';
+                ripple.style.top = y + 'px';
+                
+                this.appendChild(ripple);
+                
+                setTimeout(() => ripple.remove(), 600);
+            });
+        });
+
+        // WhatsApp Modal
+        const whatsappBtn = document.getElementById('whatsappBtn');
+        const whatsappModal = document.getElementById('whatsappModal');
+        const closeModal = document.getElementById('closeModal');
+        const whatsappForm = document.getElementById('whatsappForm');
+
+        whatsappBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            whatsappModal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeModal.addEventListener('click', function() {
+            whatsappModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        });
+
+        whatsappModal.addEventListener('click', function(e) {
+            if (e.target === whatsappModal) {
+                whatsappModal.classList.remove('active');
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        whatsappForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const nama = document.getElementById('nama').value;
+            const alamat = document.getElementById('alamat').value;
+            const tipe = document.getElementById('tipe').value;
+            const kendala = document.getElementById('kendala').value;
+            
+            const message = `Hallo saya ingin konsultasi service gadget
+
+Nama Lengkap: ${nama}
+Alamat: ${alamat}
+Tipe HP/Gadget: ${tipe}
+Kendala/Kerusakan: ${kendala}`;
+            
+            const whatsappNumber = '6288802142498';
+            const whatsappURL = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(message)}`;
+            
+            window.open(whatsappURL, '_blank');
+            
+            whatsappModal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            whatsappForm.reset();
+        });
+
+        // Logo interaction
+        const logo = document.getElementById('logo');
+        let logoRotation = 0;
+        logo.addEventListener('click', function() {
+            logoRotation += 360;
+            this.style.transform = `rotate(${logoRotation}deg) scale(1.1)`;
+            setTimeout(() => {
+                this.style.transform = `rotate(${logoRotation}deg) scale(1)`;
+            }, 300);
+        });
+
+        // Parallax effect on mouse move
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.link-card');
+            const x = (e.clientX / window.innerWidth - 0.5) * 20;
+            const y = (e.clientY / window.innerHeight - 0.5) * 20;
+            
+            cards.forEach((card, index) => {
+                const speed = (index + 1) * 0.5;
+                card.style.transform = `perspective(1000px) rotateX(${-y * speed * 0.1}deg) rotateY(${x * speed * 0.1}deg)`;
+            });
+        });
+
+        // Reset transform on mouse leave
+        document.addEventListener('mouseleave', () => {
+            document.querySelectorAll('.link-card').forEach(card => {
+                card.style.transform = '';
+            });
+        });
     </script>
 </body>
 </html>
